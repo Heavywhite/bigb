@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - BigB Uganda</title>
+    <meta name="description" content="Find answers to common questions about shopping at BigB Uganda. Payment methods, delivery, returns, and more.">
+    <link rel="stylesheet" href="bigb_styles.css">
+
+    <meta name="theme-color" content="#FF8800">
+    <style>
+        .faq-hero {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--accent-orange) 100%);
+            color: var(--neutral-white);
+            padding: 120px 0 60px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .faq-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .faq-search {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            position: relative;
+        }
+
+        .faq-search input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .faq-search button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-orange);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .faq-content {
+            padding: 4rem 0;
+        }
+
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: var(--neutral-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-orange);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .faq-section {
+            background: var(--neutral-white);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .faq-section h2 {
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--input-bg);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--input-bg);
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-orange);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 1rem;
+        }
+
+        .faq-answer ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-support {
+            background: var(--input-bg);
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .contact-support h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .contact-support p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn.primary {
+            background: var(--accent-orange);
+            color: var(--neutral-white);
+        }
+
+        .contact-btn.primary:hover {
+            background: var(--orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .contact-btn.secondary {
+            background: var(--neutral-white);
+            color: var(--accent-orange);
+            border: 2px solid var(--accent-orange);
+        }
+
+        .contact-btn.secondary:hover {
+            background: var(--accent-orange);
+            color: var(--neutral-white);
+        }
+
+        @media (max-width: 768px) {
+            .faq-hero h1 {
+                font-size: 2rem;
+            }
+
+            .faq-section {
+                padding: 2rem 1rem;
+            }
+
+            .faq-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">BigB</a>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search products...">
+                <button class="search-btn">🔍</button>
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#support">Support</a></li>
+                <li><a href="#" class="login-trigger">Login</a></li>
+            </ul>
+            
+            <a href="cart_page.html" class="cart-icon">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </a>
+            
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="faq-hero">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions about shopping at BigB</p>
+            <div class="faq-search">
+                <input type="text" id="faqSearchInput" placeholder="Search for answers...">
+                <button onclick="searchFAQ()">🔍</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="faq-content">
+        <div class="container">
+            <!-- Category Cards -->
+            <div class="faq-categories">
+                <div class="category-card" onclick="scrollToSection('orders')">
+                    <div class="category-icon">📦</div>
+                    <h3>Orders</h3>
+                    <p>Placing and managing orders</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('payment')">
+                    <div class="category-icon">💳</div>
+                    <h3>Payment</h3>
+                    <p>Payment methods and security</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('shipping')">
+                    <div class="category-icon">🚚</div>
+                    <h3>Shipping</h3>
+                    <p>Delivery and tracking</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('returns')">
+                    <div class="category-icon">🔄</div>
+                    <h3>Returns</h3>
+                    <p>Return policy and refunds</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('account')">
+                    <div class="category-icon">👤</div>
+                    <h3>Account</h3>
+                    <p>Managing your account</p>
+                </div>
+                <div class="category-card" onclick="scrollToSection('general')">
+                    <div class="category-icon">❓</div>
+                    <h3>General</h3>
+                    <p>About BigB and policies</p>
+                </div>
+            </div>
+
+            <!-- Orders FAQ -->
+            <div class="faq-section" id="orders">
+                <h2>📦 Orders</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I place an order?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To place an order on BigB:</p>
+                        <ul>
+                            <li>Browse products and click "Add to Cart" on items you want</li>
+                            <li>Click the cart icon to review your items</li>
+                            <li>Click "Proceed to Checkout"</li>
+                            <li>Enter your delivery address and contact information</li>
+                            <li>Select your preferred payment method</li>
+                            <li>Review your order and click "Place Order"</li>
+                        </ul>
+                        <p>You'll receive an order confirmation via email and SMS.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I modify or cancel my order?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can modify or cancel your order within 2 hours of placing it, as long as it hasn't been processed yet. To cancel:</p>
+                        <ul>
+                            <li>Go to "My Orders" in your account</li>
+                            <li>Find the order you want to cancel</li>
+                            <li>Click "Cancel Order" and confirm</li>
+                        </ul>
+                        <p>If your order has already been processed or shipped, please contact customer support at +256 700 000 000.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I track my order?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can track your order in several ways:</p>
+                        <ul>
+                            <li>Visit our <a href="track-order.html">Track Order</a> page and enter your order ID</li>
+                            <li>Log into your account and go to "My Orders"</li>
+                            <li>Click the tracking link in your shipping confirmation email</li>
+                        </ul>
+                        <p>You'll receive real-time updates on your order status.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What is the minimum order value?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>There is no minimum order value at BigB. You can order any product regardless of price. However, orders above UGX 500,000 qualify for free delivery.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment FAQ -->
+            <div class="faq-section" id="payment">
+                <h2>💳 Payment</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What payment methods do you accept?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept the following payment methods:</p>
+                        <ul>
+                            <li><strong>MTN Mobile Money:</strong> Pay directly from your MoMo wallet</li>
+                            <li><strong>Airtel Money:</strong> Secure Airtel Money payments</li>
+                            <li><strong>Credit/Debit Cards:</strong> Visa and Mastercard accepted</li>
+                            <li><strong>Cash on Delivery:</strong> Pay when you receive your order (available in Kampala and major cities)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is it safe to pay online?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, absolutely! We use industry-standard security measures:</p>
+                        <ul>
+                            <li>256-bit SSL encryption for all transactions</li>
+                            <li>Secure payment gateways (Paystack/Flutterwave)</li>
+                            <li>PCI DSS compliant payment processing</li>
+                            <li>No storage of complete card details on our servers</li>
+                        </ul>
+                        <p>Your payment information is always protected.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Why was my payment declined?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Payments can be declined for several reasons:</p>
+                        <ul>
+                            <li>Insufficient funds in your account/wallet</li>
+                            <li>Incorrect card details or expired card</li>
+                            <li>Bank security restrictions on online payments</li>
+                            <li>Daily transaction limit reached</li>
+                            <li>Network connectivity issues</li>
+                        </ul>
+                        <p>If your payment is declined, please try again or contact your bank/mobile money provider. You can also try an alternative payment method.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you offer installment payments?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, we do not offer installment payment options. However, we're working on partnerships with payment providers to offer "Buy Now, Pay Later" services in the near future. Stay tuned for updates!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping FAQ -->
+            <div class="faq-section" id="shipping">
+                <h2>🚚 Shipping & Delivery</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What are your delivery times?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Delivery times vary based on your location:</p>
+                        <ul>
+                            <li><strong>Kampala:</strong> Same day or next day delivery</li>
+                            <li><strong>Entebbe, Mukono:</strong> 1-2 business days</li>
+                            <li><strong>Jinja, Mbarara, other major cities:</strong> 2-3 business days</li>
+                            <li><strong>Remote areas:</strong> 3-5 business days</li>
+                        </ul>
+                        <p>Express delivery is available in Kampala for an additional fee.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How much does shipping cost?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Shipping costs:</p>
+                        <ul>
+                            <li><strong>Standard Delivery:</strong> UGX 15,000</li>
+                            <li><strong>Express Delivery (Kampala):</strong> UGX 25,000</li>
+                            <li><strong>FREE Delivery:</strong> Orders above UGX 500,000</li>
+                        </ul>
+                        <p>Shipping cost is calculated at checkout based on your location.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you deliver on weekends?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we deliver Monday through Saturday. Deliveries are made between 8:00 AM and 6:00 PM. Sunday deliveries are not currently available, but orders placed on weekends will be processed on Monday.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I change my delivery address?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can change your delivery address before the order is dispatched. Contact our customer support immediately at +256 700 000 000 or email support@bigb.ug with your order ID and new address. Once the order is out for delivery, the address cannot be changed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Returns FAQ -->
+            <div class="faq-section" id="returns">
+                <h2>🔄 Returns & Refunds</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What is your return policy?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a 7-day return policy from the date of delivery. Items must be:</p>
+                        <ul>
+                            <li>Unused and in original condition</li>
+                            <li>In original packaging with all tags attached</li>
+                            <li>Accompanied by the original receipt/invoice</li>
+                        </ul>
+                        <p>Visit our <a href="returns.html">Returns Policy</a> page for detailed information.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I return a product?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To return a product:</p>
+                        <ul>
+                            <li>Log into your account and go to "My Orders"</li>
+                            <li>Select the order containing the item you want to return</li>
+                            <li>Click "Request Return" and select the item(s)</li>
+                            <li>Provide a reason for the return</li>
+                            <li>Our team will review and approve your request</li>
+                            <li>Package the item securely and wait for pickup</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>When will I receive my refund?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refunds are processed within 3-5 business days after we receive and inspect the returned item. The refund will be credited to your original payment method:</p>
+                        <ul>
+                            <li><strong>Mobile Money:</strong> 1-2 business days</li>
+                            <li><strong>Card Payments:</strong> 5-7 business days</li>
+                            <li><strong>Cash on Delivery:</strong> Bank transfer within 3-5 business days</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I exchange an item?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, exchanges are available for items in different sizes or colors. To exchange an item, initiate a return request and specify that you want an exchange. Once we receive the returned item, we'll ship the replacement at no additional cost. Exchanges are subject to stock availability.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account FAQ -->
+            <div class="faq-section" id="account">
+                <h2>👤 Account Management</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do I need an account to shop?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While you can browse products without an account, you need to create an account to place orders. Having an account allows you to:</p>
+                        <ul>
+                            <li>Track your orders in real-time</li>
+                            <li>Save your delivery addresses</li>
+                            <li>View order history</li>
+                            <li>Save items to your wishlist</li>
+                            <li>Receive exclusive offers and promotions</li>
+                            <li>Manage returns and refunds easily</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I reset my password?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To reset your password:</p>
+                        <ul>
+                            <li>Click "Login" in the top navigation</li>
+                            <li>Click "Forgot Password?"</li>
+                            <li>Enter your registered email or phone number</li>
+                            <li>You'll receive a password reset link via email or SMS</li>
+                            <li>Click the link and create a new password</li>
+                        </ul>
+                        <p>If you don't receive the reset link, check your spam folder or contact support.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I update my account information?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To update your account information:</p>
+                        <ul>
+                            <li>Log into your account</li>
+                            <li>Click on your profile name in the top right</li>
+                            <li>Select "Account Settings"</li>
+                            <li>Update your name, email, phone number, or password</li>
+                            <li>Click "Save Changes"</li>
+                        </ul>
+                        <p>You can also manage your delivery addresses in the same section.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I delete my account?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can request account deletion by contacting our customer support at support@bigb.ug. Please note that:</p>
+                        <ul>
+                            <li>All pending orders must be completed or cancelled first</li>
+                            <li>Account deletion is permanent and cannot be undone</li>
+                            <li>Your order history will be archived but not accessible</li>
+                            <li>Any unused credits or vouchers will be forfeited</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General FAQ -->
+            <div class="faq-section" id="general">
+                <h2>❓ General Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What is BigB?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>BigB is Uganda's premier e-commerce platform that connects consumers with quality products from trusted sellers across the country. We offer a wide range of products including electronics, fashion, home goods, beauty products, and more, with secure payment options and fast delivery.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Are the products genuine?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all products sold on BigB are 100% genuine. We work directly with authorized distributors and verified sellers. Every product comes with a quality guarantee and manufacturer warranty where applicable. If you receive a counterfeit product, we offer a full refund and investigate the seller immediately.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I contact customer support?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can reach our customer support team through:</p>
+                        <ul>
+                            <li><strong>Phone:</strong> +256 700 000 000 (Mon-Sat, 8AM-8PM)</li>
+                            <li><strong>Email:</strong> support@bigb.ug</li>
+                            <li><strong>Live Chat:</strong> Click the chat icon on our website</li>
+                            <li><strong>WhatsApp:</strong> +256 700 000 000</li>
+                        </ul>
+                        <p>Our support team responds within 24 hours.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you have physical stores?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, BigB operates exclusively online. This allows us to offer competitive prices and wider product selection. However, we're planning to open pickup locations in Kampala where customers can collect their orders. Stay tuned for announcements!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I apply a promo code?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To apply a promo code:</p>
+                        <ul>
+                            <li>Add items to your cart and proceed to checkout</li>
+                            <li>On the cart page, find the "Promo Code" field</li>
+                            <li>Enter your promo code and click "Apply"</li>
+                            <li>The discount will be reflected in your order total</li>
+                        </ul>
+                        <p>Promo codes cannot be combined and have specific terms and conditions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="contact-support">
+                <h3>Still have questions?</h3>
+                <p>Our customer support team is here to help you 24/7</p>
+                <div class="contact-buttons">
+                    <a href="index.html#support" class="contact-btn primary">Contact Support</a>
+                    <a href="tel:+256700000000" class="contact-btn secondary">📞 Call Us</a>
+                    <a href="mailto:support@bigb.ug" class="contact-btn secondary">✉️ Email Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BigB</h3>
+                    <p>Uganda's premier e-commerce platform connecting consumers with quality products from trusted sellers.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="cart_page.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Care</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="returns.html">Returns & Refunds</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BigB Uganda. All rights reserved. | Made in Uganda 🇺🇬</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const wasActive = faqItem.classList.contains('active');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!wasActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('faqSearchInput').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            let foundResults = false;
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    foundResults = true;
+                    
+                    // Highlight matching items
+                    if (searchTerm.length > 0) {
+                        item.style.background = 'rgba(255, 136, 0, 0.05)';
+                    } else {
+                        item.style.background = 'transparent';
+                    }
+                } else {
+                    item.style.display = searchTerm.length > 0 ? 'none' : 'block';
+                    item.style.background = 'transparent';
+                }
+            });
+
+            if (!foundResults && searchTerm.length > 0) {
+                alert('No results found. Please try different keywords or contact support.');
+            }
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Initialize cart count
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof CartManager !== 'undefined') {
+                CartManager.updateCartCount();
+            }
+        });
+    </script>
+</body>
+</html>

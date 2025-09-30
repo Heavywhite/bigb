@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Information - BigB Uganda</title>
+    <meta name="description" content="Learn about BigB's shipping and delivery options across Uganda. Fast, reliable delivery to your doorstep.">
+    <link rel="stylesheet" href="bigb_styles.css">
+    <link rel="stylesheet" href="shipping.css">
+    <meta name="theme-color" content="#FF8800">
+
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="#" class="logo">BigB</a>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search products...">
+                <button class="search-btn">🔍</button>
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="products.php">Products</a></li>
+                <li><a href="index.php">Support</a></li>
+                <li><a href="log_index.php" class="login-trigger">Logout</a></li>
+            </ul>
+            
+            <a href="cart.php" class="cart-icon">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </a>
+            
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="shipping-hero">
+        <div class="container">
+            <h1>Shipping & Delivery</h1>
+            <p>Fast, reliable delivery across Uganda</p>
+        </div>
+    </section>
+
+    <!-- Shipping Content -->
+    <section class="shipping-content">
+        <div class="container">
+            <!-- Delivery Options -->
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-dark);">Choose Your Delivery Option</h2>
+            <div class="delivery-options">
+                <div class="delivery-card">
+                    <div class="delivery-icon">🚚</div>
+                    <h3>Standard Delivery</h3>
+                    <div class="delivery-price">UGX 15,000</div>
+                    <div class="delivery-time">⏱️ 2-3 Business Days</div>
+                    <p>Our most popular delivery option. Reliable and affordable delivery across Uganda.</p>
+                    <ul class="delivery-features">
+                        <li>Available in all major cities</li>
+                        <li>Track your order in real-time</li>
+                        <li>SMS & email notifications</li>
+                        <li>Secure delivery to your doorstep</li>
+                    </ul>
+                </div>
+
+                <div class="delivery-card">
+                    <div class="delivery-icon">⚡</div>
+                    <h3>Express Delivery</h3>
+                    <div class="delivery-price">UGX 25,000</div>
+                    <div class="delivery-time">⏱️ Same Day / Next Day</div>
+                    <p>Need it fast? Get your order delivered within 24 hours in Kampala.</p>
+                    <ul class="delivery-features">
+                        <li>Same-day delivery available</li>
+                        <li>Priority processing</li>
+                        <li>Real-time tracking</li>
+                        <li>Available in Kampala only</li>
+                    </ul>
+                </div>
+
+                <div class="delivery-card">
+                    <div class="delivery-icon">🎁</div>
+                    <h3>Free Delivery</h3>
+                    <div class="delivery-price">FREE</div>
+                    <div class="delivery-time">⏱️ 2-5 Business Days</div>
+                    <p>Enjoy free shipping on all orders above UGX 500,000.</p>
+                    <ul class="delivery-features">
+                        <li>No delivery charges</li>
+                        <li>Available nationwide</li>
+                        <li>Track your order</li>
+                        <li>Flexible delivery scheduling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Delivery Process -->
+            <div class="info-section">
+                <h2>🚀 How Delivery Works</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h4>Order Confirmation</h4>
+                            <p>Once you place your order, you'll receive an instant confirmation via email and SMS with your order details and tracking number.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h4>Order Processing</h4>
+                            <p>Our team picks and packs your order with care. This usually takes 2-4 hours. You'll receive a notification when your order is ready for dispatch.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h4>Dispatch & Transit</h4>
+                            <p>Your order is handed over to our delivery partner. Track your package in real-time as it makes its way to you.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h4>Out for Delivery</h4>
+                            <p>On delivery day, our driver will contact you 30 minutes before arrival. Make sure someone is available to receive the package.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">5</div>
+                        <div class="timeline-content">
+                            <h4>Delivery Completed</h4>
+                            <p>Receive your order, inspect the package, and confirm delivery. You'll get a final confirmation message.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coverage Areas -->
+            <div class="info-section">
+                <h2>📍 Delivery Coverage</h2>
+                <div class="coverage-map">
+                    <p style="color: #666; margin-bottom: 1rem;">We deliver to all major cities and districts across Uganda</p>
+                    <div class="coverage-grid">
+                        <div class="coverage-item">
+                            <h4>Kampala</h4>
+                            <p>Same day / Next day</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Entebbe</h4>
+                            <p>1-2 business days</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Mukono</h4>
+                            <p>1-2 business days</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Jinja</h4>
+                            <p>2-3 business days</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Mbarara/Kabale</h4>
+                            <p>2-3 business days</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Gulu</h4>
+                            <p>3-4 business days</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Mbale</h4>
+                            <p>3-4 business days</p>
+                        </div>
+                        <div class="coverage-item">
+                            <h4>Other Areas</h4>
+                            <p>3-5 business days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Tips -->
+            <div class="info-section">
+                <h2>💡 Delivery Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>📱 Keep Your Phone On</h4>
+                        <p>Our delivery driver will call you before arrival. Make sure your phone is on and accessible.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>🏠 Provide Clear Address</h4>
+                        <p>Include landmarks and detailed directions to help our driver locate you easily.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>🕐 Be Available</h4>
+                        <p>Someone should be available during the delivery window to receive the package.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>📦 Inspect on Delivery</h4>
+                        <p>Check your package before signing. Report any damage immediately to the driver.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>💳 Have Payment Ready</h4>
+                        <p>If you chose Cash on Delivery, have the exact amount ready for the driver.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h4>📋 Keep Order ID Handy</h4>
+                        <p>Have your order ID ready for verification when the driver arrives.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick FAQ -->
+            <div class="faq-quick">
+                <h3>❓ Common Questions</h3>
+                
+                <div class="faq-quick-item">
+                    <strong>Can I change my delivery address?</strong>
+                    <p>Yes, contact us immediately at +256 700 000 000 before your order is dispatched. Address changes cannot be made once the order is out for delivery.</p>
+                </div>
+
+                <div class="faq-quick-item">
+                    <strong>What if I'm not home during delivery?</strong>
+                    <p>Our driver will attempt to contact you. If unsuccessful, the package will be held for 24 hours and a second delivery attempt will be made. You may also arrange for someone else to receive it.</p>
+                </div>
+
+                <div class="faq-quick-item">
+                    <strong>Do you deliver on weekends?</strong>
+                    <p>Yes, we deliver Monday through Saturday between 8:00 AM and 6:00 PM. Sunday deliveries are not currently available.</p>
+                </div>
+
+                <div class="faq-quick-item">
+                    <strong>How do I track my order?</strong>
+                    <p>Use your order ID to track your package on our <a href="track-order.html" style="color: var(--accent-orange); font-weight: 600;">Track Order</a> page. You'll also receive SMS updates at every stage.</p>
+                </div>
+
+                <div class="faq-quick-item">
+                    <strong>What about fragile items?</strong>
+                    <p>All fragile items are specially packed and marked. Our delivery partners are trained to handle them with extra care.</p>
+                </div>
+            </div>
+
+            <!-- CTA Box -->
+            <div class="cta-box">
+                <h3>Ready to Start Shopping?</h3>
+                <p>Browse thousands of products with fast, reliable delivery to your doorstep</p>
+                <a href="index.html#products" class="cta-button">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BigB</h3>
+                    <p>Uganda's premier e-commerce platform connecting consumers with quality products from trusted sellers.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="cart_page.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Care</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="returns.html">Returns & Refunds</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BigB Uganda. All rights reserved. | Made in Uganda 🇺🇬</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    // Toggle mobile menu with ARIA attributes for accessibility
+    mobileMenuToggle.addEventListener('click', () => {
+        const expanded = mobileMenuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        mobileMenuToggle.setAttribute('aria-expanded', expanded);
+        navLinks.setAttribute('aria-hidden', !expanded);
+    });
+
+    // Close mobile menu when a nav link is clicked (for better UX)
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+                mobileMenuToggle.setAttribute('aria-expanded', false);
+                navLinks.setAttribute('aria-hidden', true);
+            }
+        });
+    });
+
+    // Initialize cart count with fallback
+    if (typeof CartManager !== 'undefined' && typeof CartManager.updateCartCount === 'function') {
+        CartManager.updateCartCount();
+    } else {
+        // Fallback: simulate cart count from localStorage or zero
+        const cartCountElem = document.getElementById('cartCount');
+        const storedCount = localStorage.getItem('cartCount');
+        cartCountElem.textContent = storedCount ? storedCount : '0';
+    }
+});
+    </script>
+</body>
+</html>

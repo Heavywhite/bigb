@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order - BigB Uganda</title>
+    <meta name="description" content="Track your BigB order in real-time. Get updates on your delivery status and estimated arrival time.">
+    <link rel="stylesheet" href="bigb_styles.css">
+    <meta name="theme-color" content="#FF8800">
+    <style>
+        .track-hero {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--accent-orange) 100%);
+            color: var(--neutral-white);
+            padding: 120px 0 60px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .track-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .track-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .track-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+
+        .track-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .track-button:hover {
+            background: var(--orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .track-content {
+            padding: 4rem 0;
+        }
+
+        .tracking-result {
+            display: none;
+            background: var(--neutral-white);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .tracking-result.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--input-bg);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .order-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .order-status {
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .order-status.processing {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .order-status.shipped {
+            background: #F3E5F5;
+            color: #7B1FA2;
+        }
+
+        .order-status.delivered {
+            background: #E8F5E9;
+            color: #388E3C;
+        }
+
+        .order-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: var(--input-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .info-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+
+        .tracking-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-marker {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            z-index: 1;
+            position: relative;
+        }
+
+        .timeline-item.completed .timeline-marker {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .timeline-item.active .timeline-marker {
+            background: var(--accent-orange);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-item.pending .timeline-marker {
+            background: #E0E0E0;
+            color: #999;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 136, 0, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(255, 136, 0, 0);
+            }
+        }
+
+        .timeline-item:not(:last-child) .timeline-marker::after {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 24px;
+            width: 2px;
+            height: calc(100% + 2rem);
+            background: var(--input-bg);
+        }
+
+        .timeline-item.completed:not(:last-child) .timeline-marker::after {
+            background: var(--success-green);
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-time {
+            color: var(--accent-orange);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .timeline-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .estimated-delivery {
+            background: linear-gradient(135deg, var(--accent-orange), var(--orange-hover));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .estimated-delivery h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .delivery-date {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .delivery-note {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .order-items {
+            background: var(--input-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .order-items h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .item-row {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            background: var(--input-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-meta {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--accent-orange);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .action-btn.primary {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--orange-hover);
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            color: var(--accent-orange);
+            border: 2px solid var(--accent-orange);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .help-section {
+            background: var(--input-bg);
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .help-section h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .help-section p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .help-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .no-order {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .no-order-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .no-order h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .no-order p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .track-hero h1 {
+                font-size: 2rem;
+            }
+
+            .track-form {
+                padding: 1.5rem;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .order-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                gap: 1rem;
+            }
+
+            .tracking-result {
+                padding: 2rem 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">BigB</a>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search products...">
+                <button class="search-btn">🔍</button>
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#support">Support</a></li>
+                <li><a href="#" class="login-trigger">Login</a></li>
+            </ul>
+            
+            <a href="cart_page.html" class="cart-icon">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </a>
+            
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="track-hero">
+        <div class="container">
+            <h1>Track Your Order</h1>
+            <p>Get real-time updates on your delivery</p>
+            
+            <!-- Track Form -->
+            <div class="track-form">
+                <form id="trackingForm" onsubmit="trackOrder(event)">
+                    <div class="form-group">
+                        <label for="orderId">Order ID</label>
+                        <input type="text" id="orderId" placeholder="e.g., ORD20250101234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailOrPhone">Email or Phone Number</label>
+                        <input type="text" id="emailOrPhone" placeholder="Enter your email or phone number" required>
+                    </div>
+                    <button type="submit" class="track-button">Track Order</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracking Content -->
+    <section class="track-content">
+        <div class="container">
+            <!-- Tracking Result (Hidden by default) -->
+            <div class="tracking-result" id="trackingResult">
+                <!-- Order Header -->
+                <div class="order-header">
+                    <div class="order-id">Order #<span id="displayOrderId">ORD20250101234</span></div>
+                    <div class="order-status processing" id="orderStatus">Processing</div>
+                </div>
+
+                <!-- Order Information -->
+                <div class="order-info-grid">
+                    <div class="info-card">
+                        <h4>Shipping Address</h4>
+                        <p id="shippingAddress">
+                            John Doe<br>
+                            Plot 123, Kampala Road<br>
+                            Kampala, Central Region<br>
+                            +256 700 000 000
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Order Summary</h4>
+                        <p>
+                            <strong>Total Amount:</strong> <span id="orderTotal">UGX 850,000</span><br>
+                            <strong>Payment Method:</strong> <span id="paymentMethod">MTN Mobile Money</span><br>
+                            <strong>Payment Status:</strong> <span id="paymentStatus">Completed</span>
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Delivery Information</h4>
+                        <p>
+                            <strong>Method:</strong> <span id="deliveryMethod">Standard Delivery</span><br>
+                            <strong>Tracking #:</strong> <span id="trackingNumber">TRK20250101234</span><br>
+                            <strong>Carrier:</strong> <span id="carrier">BigB Logistics</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Estimated Delivery -->
+                <div class="estimated-delivery">
+                    <h3>📦 Estimated Delivery</h3>
+                    <div class="delivery-date" id="estimatedDate">Wednesday, January 3, 2025</div>
+                    <div class="delivery-note">Between 9:00 AM - 6:00 PM</div>
+                </div>
+
+                <!-- Tracking Timeline -->
+                <div style="background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem;">
+                    <h3 style="color: var(--text-dark); margin-bottom: 2rem;">Order Timeline</h3>
+                    <div class="tracking-timeline" id="trackingTimeline">
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker">✓</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Order Placed</div>
+                                <div class="timeline-time">January 1, 2025 - 10:30 AM</div>
+                                <div class="timeline-description">Your order has been successfully placed and confirmed.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker">✓</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Payment Confirmed</div>
+                                <div class="timeline-time">January 1, 2025 - 10:32 AM</div>
+                                <div class="timeline-description">Payment received via MTN Mobile Money.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item active">
+                            <div class="timeline-marker">📦</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Order Processing</div>
+                                <div class="timeline-time">January 1, 2025 - 2:00 PM</div>
+                                <div class="timeline-description">Your order is being picked and packed by our warehouse team.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item pending">
+                            <div class="timeline-marker">🚚</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Out for Delivery</div>
+                                <div class="timeline-time">Pending</div>
+                                <div class="timeline-description">Your order will be dispatched for delivery soon.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item pending">
+                            <div class="timeline-marker">✅</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Delivered</div>
+                                <div class="timeline-time">Pending</div>
+                                <div class="timeline-description">Your order will be delivered to your address.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items -->
+                <div class="order-items">
+                    <h3>Items in this Order</h3>
+                    <div id="orderItemsList">
+                        <div class="item-row">
+                            <div class="item-image">📱</div>
+                            <div class="item-details">
+                                <div class="item-name">Samsung Galaxy A54</div>
+                                <div class="item-meta">Quantity: 1 | 128GB, Black</div>
+                            </div>
+                            <div class="item-price">UGX 850,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="index.html#support" class="action-btn primary">Contact Support</a>
+                    <a href="returns.html" class="action-btn secondary">Request Return</a>
+                    <button class="action-btn secondary" onclick="window.print()">Print Receipt</button>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="help-section">
+                <h3>Need Help?</h3>
+                <p>Our customer support team is here to assist you with any questions about your order</p>
+                <div class="help-buttons">
+                    <a href="tel:+256700000000" class="action-btn primary">📞 Call +256 700 000 000</a>
+                    <a href="mailto:support@bigb.ug" class="action-btn secondary">✉️ Email Support</a>
+                    <a href="faq.html" class="action-btn secondary">❓ View FAQ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BigB</h3>
+                    <p>Uganda's premier e-commerce platform connecting consumers with quality products from trusted sellers.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📸</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="cart_page.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Care</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="returns.html">Returns & Refunds</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BigB Uganda. All rights reserved. | Made in Uganda 🇺🇬</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function trackOrder(event) {
+            event.preventDefault();
+            
+            const orderId = document.getElementById('orderId').value;
+            const emailOrPhone = document.getElementById('emailOrPhone').value;
+
+            // Validate inputs
+            if (!orderId || !emailOrPhone) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Show loading
+            const trackButton = event.target.querySelector('.track-button');
+            const originalText = trackButton.textContent;
+            trackButton.textContent = 'Tracking...';
+            trackButton.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // In production, this would be an actual API call
+                // For demo, we'll show the tracking result
+                document.getElementById('trackingResult').classList.add('active');
+                document.getElementById('displayOrderId').textContent = orderId;
+                
+                // Scroll to result
+                document.getElementById('trackingResult').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+
+                // Reset button
+                trackButton.textContent = originalText;
+                trackButton.disabled = false;
+            }, 1500);
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Initialize cart count
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof CartManager !== 'undefined') {
+                CartManager.updateCartCount();
+            }
+
+            // Check if order ID is in URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderIdParam = urlParams.get('order_id');
+            
+            if (orderIdParam) {
+                document.getElementById('orderId').value = orderIdParam;
+                // Auto-submit if email is stored
+                const userEmail = localStorage.getItem('bigb_user_email');
+                if (userEmail) {
+                    document.getElementById('emailOrPhone').value = userEmail;
+                    document.getElementById('trackingForm').dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+    </script>
+</body>
+</html>
