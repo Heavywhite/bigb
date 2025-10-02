@@ -3,15 +3,14 @@ require_once 'connect.php';
 
 session_start();
 
-// For demo, static data simulating analytics
 $salesData = [
-    ['date' => '2024-05-01', 'sales' => 1200000],
-    ['date' => '2024-05-02', 'sales' => 1500000],
-    ['date' => '2024-05-03', 'sales' => 900000],
-    ['date' => '2024-05-04', 'sales' => 1800000],
-    ['date' => '2024-05-05', 'sales' => 2000000],
-    ['date' => '2024-05-06', 'sales' => 1700000],
-    ['date' => '2024-05-07', 'sales' => 2200000],
+    ['date' => '2024-05-01', 'sales' => 1200000, 'orders' => 10],
+    ['date' => '2024-05-02', 'sales' => 1500000, 'orders' => 12],
+    ['date' => '2024-05-03', 'sales' => 900000,  'orders' => 8],
+    ['date' => '2024-05-04', 'sales' => 1800000, 'orders' => 15],
+    ['date' => '2024-05-05', 'sales' => 2000000, 'orders' => 18],
+    ['date' => '2024-05-06', 'sales' => 1700000, 'orders' => 14],
+    ['date' => '2024-05-07', 'sales' => 2200000, 'orders' => 20],
 ];
 
 $topProducts = [
@@ -34,7 +33,12 @@ $customerGrowth = [
 $totalSales = array_sum(array_column($salesData, 'sales'));
 $totalOrders = 350; // example
 $totalCustomers = 120; // example
-$avgOrderValue = $totalSales / $totalOrders;
+$avgOrderValue = $totalOrders > 0 ? $totalSales / $totalOrders : 0;
+
+// Calculate average order value per day for the new chart
+$avgOrderValueOverTime = array_map(function($d) {
+    return $d['orders'] > 0 ? $d['sales'] / $d['orders'] : 0;
+}, $salesData);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +120,7 @@ $avgOrderValue = $totalSales / $totalOrders;
         <span class="nav-icon">📂</span>
         <span class="nav-text">Categories</span>
       </a>
-      <a href="admin_inventory.php" class="nav-item">
+      <a href="inventory.php" class="nav-item">
         <span class="nav-icon">📋</span>
         <span class="nav-text">Inventory</span>
       </a>
@@ -142,7 +146,7 @@ $avgOrderValue = $totalSales / $totalOrders;
         <span class="nav-icon">🏠</span>
         <span class="nav-text">View Store</span>
       </a>
-      <a href="#" class="nav-item" onclick="adminLogout()">
+      <a href="index.php" class="nav-item" onclick="adminLogout()">
         <span class="nav-icon">🚪</span>
         <span class="nav-text">Logout</span>
       </a>
@@ -175,6 +179,14 @@ $avgOrderValue = $totalSales / $totalOrders;
         <h3>Avg Order Value</h3>
         <p>UGX <?= number_format($avgOrderValue, 2) ?></p>
       </div>
+      <div class="card" tabindex="0">
+        <h3>Avg Orders per Day</h3>
+        <p><?= number_format(array_sum(array_column($salesData, 'orders')) / count($salesData), 2) ?></p>
+      </div>
+      <div class="card" tabindex="0">
+        <h3>Avg Sales per Day</h3>
+        <p>UGX <?= number_format($totalSales / count($salesData), 2) ?></p>
+      </div>
     </section>
 
     <section class="charts-container" aria-label="Analytics charts">
@@ -189,6 +201,10 @@ $avgOrderValue = $totalSales / $totalOrders;
       <div class="chart-box">
         <h3>Customer Growth</h3>
         <canvas id="customerGrowthChart" role="img" aria-label="Line chart showing customer growth over months"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Average Order Value Over Time</h3>
+        <canvas id="avgOrderValueChart" role="img" aria-label="Line chart showing average order value over time"></canvas>
       </div>
     </section>
   </main>
@@ -213,6 +229,7 @@ $avgOrderValue = $totalSales / $totalOrders;
     const salesData = <?= json_encode($salesData) ?>;
     const topProducts = <?= json_encode($topProducts) ?>;
     const customerGrowth = <?= json_encode($customerGrowth) ?>;
+    const avgOrderValueOverTime = <?= json_encode($avgOrderValueOverTime) ?>;
 
     // Sales Over Time Chart
     const salesCtx = document.getElementById('salesChart').getContext('2d');
@@ -303,6 +320,40 @@ $avgOrderValue = $totalSales / $totalOrders;
           y: {
             beginAtZero: true,
             ticks: { stepSize: 10 }
+          }
+        }
+      }
+    });
+
+    // Average Order Value Over Time Chart
+    const avgOrderValueCtx = document.getElementById('avgOrderValueChart').getContext('2d');
+    const avgOrderValueChart = new Chart(avgOrderValueCtx, {
+      type: 'line',
+      data: {
+        labels: salesData.map(d => d.date),
+        datasets: [{
+          label: 'Avg Order Value (UGX)',
+          data: avgOrderValueOverTime,
+          borderColor: '#FF8800',
+          backgroundColor: 'rgba(255, 136, 0, 0.2)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: value => 'UGX ' + value.toLocaleString()
+            }
           }
         }
       }

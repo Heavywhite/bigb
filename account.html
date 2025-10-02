@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - BigB Uganda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --accent-orange: #FF8800;
+            --orange-hover: #E67500;
+            --neutral-white: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #EEEEEE;
+            --input-bg: #F8F8F8;
+            --border-color: #CCCCCC;
+            --success-green: #4CAF50;
+            --error-red: #f44336;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary-black);
+            color: var(--neutral-white);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: var(--accent-orange);
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--neutral-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .cart-icon {
+            position: relative;
+            color: var(--neutral-white);
+            font-size: 1.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-orange);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Container */
+        .account-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar Navigation */
+        .account-sidebar {
+            background: var(--neutral-white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .user-info {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--orange-hover));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .user-email {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255, 136, 0, 0.1);
+            color: var(--accent-orange);
+        }
+
+        .sidebar-menu a.active {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .sidebar-icon {
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        /* Main Content Area */
+        .account-content {
+            background: var(--neutral-white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            color: #666;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Orders List */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--accent-orange);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-shipped {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .order-items {
+            margin-bottom: 1rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-total {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--accent-orange);
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-track {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .btn-track:hover {
+            background: var(--orange-hover);
+        }
+
+        .btn-reorder {
+            background: var(--primary-black);
+            color: white;
+        }
+
+        .btn-reorder:hover {
+            opacity: 0.8;
+        }
+
+        /* Profile Form */
+        .profile-form {
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--input-bg);
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--primary-black);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            opacity: 0.8;
+        }
+
+        /* Addresses */
+        .addresses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .address-card {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .address-card.default {
+            border-color: var(--accent-orange);
+            background: rgba(255, 136, 0, 0.05);
+        }
+
+        .default-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .address-content {
+            margin-bottom: 1rem;
+        }
+
+        .address-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .address-details {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-address-btn {
+            border: 2px dashed var(--accent-orange);
+            background: transparent;
+            color: var(--accent-orange);
+            padding: 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-address-btn:hover {
+            background: rgba(255, 136, 0, 0.1);
+        }
+
+        /* Wishlist */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .wishlist-item {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .wishlist-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .remove-wishlist {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wishlist-image {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .wishlist-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .wishlist-price {
+            color: var(--accent-orange);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Settings */
+        .settings-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .settings-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-orange);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success-green);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--error-red);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .account-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .account-sidebar {
+                position: static;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .addresses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.php" class="logo">BigB</a>
+            <ul class="nav-links">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="index.php#categories">Categories</a></li>
+                <li><a href="index.php#products">Products</a></li>
+                <li><a href="account.html" class="active">My Account</a></li>
+                <li><a href="index.php#support">Support</a></li>
+            </ul>
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-count">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Account Container -->
+    <div class="account-container">
+        <!-- Sidebar -->
+        <aside class="account-sidebar">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <div class="user-name" id="userName">Isaac Ni</div>
+                <div class="user-email" id="userEmail">john.doe@email.com</div>
+            </div>
+
+            <nav>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="#" class="active" data-section="dashboard">
+                            <span class="sidebar-icon">📊</span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="orders">
+                            <span class="sidebar-icon">📦</span>
+                            My Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="profile">
+                            <span class="sidebar-icon">👤</span>
+                            Profile Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="addresses">
+                            <span class="sidebar-icon">📍</span>
+                            Addresses
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="wishlist">
+                            <span class="sidebar-icon">❤️</span>
+                            Wishlist
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="payments">
+                            <span class="sidebar-icon">💳</span>
+                            Payment Methods
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="settings">
+                            <span class="sidebar-icon">⚙️</span>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="logout-btn" onclick="handleLogout()">
+                Logout
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="account-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1 class="section-title">Dashboard</h1>
+                    <p class="section-subtitle">Welcome back! Here's what's happening with your account.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-value" id="totalOrders">12</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🚚</div>
+                        <div class="stat-value" id="pendingOrders">3</div>
+                        <div class="stat-label">Pending Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❤️</div>
+                        <div class="stat-value" id="wishlistCount">8</div>
+                        <div class="stat-label">Wishlist Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" id="totalSpent">UGX 2.4M</div>
+                        <div class="stat-label">Total Spent</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 1rem;">Recent Orders</h3>
+                <div class="orders-list" id="recentOrders">
+                    <!-- Recent orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">My Orders</h1>
+                    <p class="section-subtitle">Track and manage your orders</p>
+                </div>
+
+                <div class="orders-list" id="allOrders">
+                    <!-- All orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Profile Settings</h1>
+                    <p class="section-subtitle">Manage your personal information</p>
+                </div>
+
+                <form class="profile-form" id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" value="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" value="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" value="john.doe@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" value="+256 700 123 456" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" class="form-input" value="1990-01-01">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <select class="form-input">
+                            <option>Select Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="button" class="btn-secondary" onclick="showChangePasswordModal()">Change Password</button>
+                </form>
+            </section>
+
+            <!-- Addresses Section -->
+            <section id="addresses" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Saved Addresses</h1>
+                    <p class="section-subtitle">Manage your delivery addresses</p>
+                </div>
+
+                <div class="addresses-grid" id="addressesGrid">
+                    <!-- Addresses will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Wishlist Section -->
+            <section id="wishlist" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">My Wishlist</h1>
+                    <p class="section-subtitle">Items you've saved for later</p>
+                </div>
+
+                <div class="wishlist-grid" id="wishlistGrid">
+                    <!-- Wishlist items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Payment Methods Section -->
+            <section id="payments" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Payment Methods</h1>
+                    <p class="section-subtitle">Manage your saved payment options</p>
+                </div>
+
+                <div class="addresses-grid">
+                    <div class="address-card default">
+                        <span class="default-badge">Default</span>
+                        <div class="address-content">
+                            <div class="address-name">📱 MTN Mobile Money</div>
+                            <div class="address-details">
+                                +256 700 123 456<br>
+                                Verified
+                            </div>
+                        </div>
+                        <div class="address-actions">
+                            <button class="btn-small btn-track">Edit</button>
+                            <button class="btn-small btn-reorder">Remove</button>
+                        </div>
+                    </div>
+
+                    <div class="address-card">
+                        <div class="address-content">
+                            <div class="address-name">💳 Visa Card</div>
+                            <div class="address-details">
+                                **** **** **** 1234<br>
+                                Expires 12/25
+                            </div>
+                        </div>
+                        <div class="address-actions">
+                            <button class="btn-small btn-track">Edit</button>
+                            <button class="btn-small btn-reorder">Remove</button>
+                        </div>
+                    </div>
+
+                    <button class="add-address-btn">
+                        ➕ Add Payment Method
+                    </button>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Account Settings</h1>
+                    <p class="section-subtitle">Manage your preferences and notifications</p>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-title">Notifications</h3>
+                    
+                    <div class="toggle-switch">
+                        <span>Email Notifications</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-switch">
+                        <span>SMS Notifications</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-switch">
+                        <span>Order Updates</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-switch">
+                        <span>Promotional Offers</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-title">Privacy</h3>
+                    
+                    <div class="toggle-switch">
+                        <span>Show Online Status</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-switch">
+                        <span>Share Purchase History</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-title">Security</h3>
+                    <button class="btn-primary">Enable Two-Factor Authentication</button>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="settings-title">Danger Zone</h3>
+                    <button class="btn-secondary" style="background: var(--error-red); margin-left: 0;" onclick="deleteAccount()">Delete Account</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage">Action completed successfully</span>
+    </div>
+
+    <script>
+        // Initialize page on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAccount();
+        });
+
+        // Initialize account page
+        function initializeAccount() {
+            loadUserInfo();
+            loadRecentOrders();
+            loadAllOrders();
+            loadAddresses();
+            loadWishlist();
+            updateCartCount();
+            initializeSidebarNavigation();
+            initializeProfileForm();
+        }
+
+        // Load user information from localStorage
+        function loadUserInfo() {
+            const savedUser = localStorage.getItem('bigb_user');
+            if (savedUser) {
+                try {
+                    const user = JSON.parse(savedUser);
+                    document.getElementById('userName').textContent = user.name || 'User';
+                    document.getElementById('userEmail').textContent = user.email || '';
+                    
+                    // Set avatar initial
+                    const initials = user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : '👤';
+                    if (initials.length <= 2 && initials.match(/[A-Z]/)) {
+                        document.getElementById('userAvatar').textContent = initials;
+                    }
+                } catch (e) {
+                    console.error('Error loading user info:', e);
+                }
+            } else {
+                // Redirect to login if no user found
+                window.location.href = 'index.php';
+            }
+        }
+
+        // Sidebar navigation
+        function initializeSidebarNavigation() {
+            const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+            
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show selected section
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                    
+                    // Scroll to top of content
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
+
+        // Load recent orders
+        function loadRecentOrders() {
+            const recentOrdersContainer = document.getElementById('recentOrders');
+            const orders = getOrders().slice(0, 3); // Get last 3 orders
+            
+            if (orders.length === 0) {
+                recentOrdersContainer.innerHTML = '<p style="text-align: center; color: #666;">No orders yet. Start shopping to see your orders here!</p>';
+                return;
+            }
+            
+            recentOrdersContainer.innerHTML = orders.map(order => createOrderCard(order)).join('');
+        }
+
+        // Load all orders
+        function loadAllOrders() {
+            const allOrdersContainer = document.getElementById('allOrders');
+            const orders = getOrders();
+            
+            if (orders.length === 0) {
+                allOrdersContainer.innerHTML = '<p style="text-align: center; color: #666;">No orders yet. Start shopping to see your orders here!</p>';
+                return;
+            }
+            
+            allOrdersContainer.innerHTML = orders.map(order => createOrderCard(order)).join('');
+        }
+
+        // Get orders from localStorage or create sample data
+        function getOrders() {
+            const savedOrders = localStorage.getItem('bigb_user_orders');
+            if (savedOrders) {
+                return JSON.parse(savedOrders);
+            }
+            
+            // Sample orders for demonstration
+            return [
+                {
+                    id: 'BGB123456',
+                    date: '2025-01-15',
+                    status: 'delivered',
+                    items: [
+                        { name: 'Samsung Galaxy A54', quantity: 1, price: 1200000 },
+                        { name: 'Wireless Earbuds', quantity: 1, price: 150000 }
+                    ],
+                    total: 1365000,
+                    paymentMethod: 'MTN Mobile Money'
+                },
+                {
+                    id: 'BGB123457',
+                    date: '2025-01-20',
+                    status: 'shipped',
+                    items: [
+                        { name: 'Cotton T-Shirt', quantity: 2, price: 50000 }
+                    ],
+                    total: 65000,
+                    paymentMethod: 'Airtel Money'
+                },
+                {
+                    id: 'BGB123458',
+                    date: '2025-01-25',
+                    status: 'processing',
+                    items: [
+                        { name: 'Kitchen Blender', quantity: 1, price: 180000 },
+                        { name: 'Skincare Set', quantity: 1, price: 75000 }
+                    ],
+                    total: 270000,
+                    paymentMethod: 'Card Payment'
+                }
+            ];
+        }
+
+        // Create order card HTML
+        function createOrderCard(order) {
+            const statusClasses = {
+                'processing': 'status-processing',
+                'shipped': 'status-shipped',
+                'delivered': 'status-delivered'
+            };
+            
+            return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order #${order.id}</div>
+                            <div style="color: #666; font-size: 0.9rem;">${formatDate(order.date)}</div>
+                        </div>
+                        <span class="order-status ${statusClasses[order.status]}">${order.status.toUpperCase()}</span>
+                    </div>
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <span>${item.name} × ${item.quantity}</span>
+                                <span>${formatCurrency(item.price * item.quantity)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">Total: ${formatCurrency(order.total)}</div>
+                        <div class="order-actions">
+                            <button class="btn-small btn-track" onclick="trackOrder('${order.id}')">Track Order</button>
+                            <button class="btn-small btn-reorder" onclick="reorder('${order.id}')">Reorder</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load addresses
+        function loadAddresses() {
+            const addressesGrid = document.getElementById('addressesGrid');
+            const addresses = getAddresses();
+            
+            const addressesHTML = addresses.map(address => `
+                <div class="address-card ${address.isDefault ? 'default' : ''}">
+                    ${address.isDefault ? '<span class="default-badge">Default</span>' : ''}
+                    <div class="address-content">
+                        <div class="address-name">${address.name}</div>
+                        <div class="address-details">
+                            ${address.addressLine1}<br>
+                            ${address.addressLine2 ? address.addressLine2 + '<br>' : ''}
+                            ${address.city}, ${address.district}<br>
+                            ${address.phone}
+                        </div>
+                    </div>
+                    <div class="address-actions">
+                        <button class="btn-small btn-track" onclick="editAddress(${address.id})">Edit</button>
+                        <button class="btn-small btn-reorder" onclick="deleteAddress(${address.id})">Delete</button>
+                        ${!address.isDefault ? `<button class="btn-small btn-track" onclick="setDefaultAddress(${address.id})">Set Default</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            addressesGrid.innerHTML = addressesHTML + `
+                <button class="add-address-btn" onclick="addNewAddress()">
+                    ➕ Add New Address
+                </button>
+            `;
+        }
+
+        // Get addresses
+        function getAddresses() {
+            const savedAddresses = localStorage.getItem('bigb_user_addresses');
+            if (savedAddresses) {
+                return JSON.parse(savedAddresses);
+            }
+            
+            // Sample addresses
+            return [
+                {
+                    id: 1,
+                    name: 'Home',
+                    addressLine1: 'Plot 123, Kampala Road',
+                    addressLine2: 'Near City Square',
+                    city: 'Kampala',
+                    district: 'Kampala',
+                    phone: '+256 700 123 456',
+                    isDefault: true
+                },
+                {
+                    id: 2,
+                    name: 'Office',
+                    addressLine1: 'Plot 456, Nakasero Road',
+                    addressLine2: '',
+                    city: 'Kampala',
+                    district: 'Kampala',
+                    phone: '+256 700 123 456',
+                    isDefault: false
+                }
+            ];
+        }
+
+        // Load wishlist
+        function loadWishlist() {
+            const wishlistGrid = document.getElementById('wishlistGrid');
+            const wishlist = getWishlist();
+            
+            if (wishlist.length === 0) {
+                wishlistGrid.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1;">No items in wishlist yet.</p>';
+                return;
+            }
+            
+            wishlistGrid.innerHTML = wishlist.map(item => `
+                <div class="wishlist-item">
+                    <button class="remove-wishlist" onclick="removeFromWishlist(${item.id})">×</button>
+                    <div class="wishlist-image">${item.image}</div>
+                    <div class="wishlist-name">${item.name}</div>
+                    <div class="wishlist-price">${formatCurrency(item.price)}</div>
+                    <button class="btn-small btn-track" style="width: 100%;" onclick="addToCartFromWishlist(${item.id})">Add to Cart</button>
+                </div>
+            `).join('');
+        }
+
+        // Get wishlist
+        function getWishlist() {
+            const savedWishlist = localStorage.getItem('bigb_wishlist');
+            if (savedWishlist) {
+                return JSON.parse(savedWishlist);
+            }
+            
+            // Sample wishlist items
+            return [
+                { id: 1, name: 'Laptop Bag', price: 85000, image: '💼' },
+                { id: 2, name: 'Running Shoes', price: 120000, image: '👟' },
+                { id: 3, name: 'Smart Watch', price: 450000, image: '⌚' }
+            ];
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = loadCartFromStorage();
+            const cartCount = cart.reduce((total, item) => total + (item.quantity || 0), 0);
+            const cartCountElement = document.querySelector('.cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = cartCount;
+            }
+        }
+
+        // Load cart from storage
+        function loadCartFromStorage() {
+            try {
+                const savedCart = localStorage.getItem('bigb_cart');
+                return savedCart ? JSON.parse(savedCart) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Initialize profile form
+        function initializeProfileForm() {
+            const profileForm = document.getElementById('profileForm');
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(profileForm);
+                
+                showToast('Profile updated successfully!');
+                
+                // In real app, send to backend API
+                console.log('Profile update:', Object.fromEntries(formData));
+            });
+        }
+
+        // Track order
+        function trackOrder(orderId) {
+            showToast(`Tracking information for order #${orderId}`);
+            // In real app, show tracking modal or redirect to tracking page
+        }
+
+        // Reorder
+        function reorder(orderId) {
+            const orders = getOrders();
+            const order = orders.find(o => o.id === orderId);
+            
+            if (order) {
+                showToast('Items added to cart!');
+                // In real app, add order items to cart
+                setTimeout(() => {
+                    window.location.href = 'cart.html';
+                }, 1500);
+            }
+        }
+
+        // Address functions
+        function editAddress(addressId) {
+            showToast('Edit address functionality would open here');
+        }
+
+        function deleteAddress(addressId) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                showToast('Address deleted successfully', 'success');
+                loadAddresses();
+            }
+        }
+
+        function setDefaultAddress(addressId) {
+            showToast('Default address updated');
+            loadAddresses();
+        }
+
+        function addNewAddress() {
+            showToast('Add new address form would open here');
+        }
+
+        // Wishlist functions
+        function removeFromWishlist(itemId) {
+            if (confirm('Remove this item from wishlist?')) {
+                showToast('Item removed from wishlist', 'error');
+                loadWishlist();
+            }
+        }
+
+        function addToCartFromWishlist(itemId) {
+            showToast('Item added to cart!');
+            updateCartCount();
+        }
+
+        // Change password
+        function showChangePasswordModal() {
+            const currentPassword = prompt('Enter current password:');
+            if (currentPassword) {
+                const newPassword = prompt('Enter new password:');
+                if (newPassword && newPassword.length >= 6) {
+                    const confirmPassword = prompt('Confirm new password:');
+                    if (confirmPassword === newPassword) {
+                        showToast('Password changed successfully!');
+                    } else {
+                        showToast('Passwords do not match', 'error');
+                    }
+                } else {
+                    showToast('Password must be at least 6 characters', 'error');
+                }
+            }
+        }
+
+        // Delete account
+        function deleteAccount() {
+            const confirmation = prompt('Type "DELETE" to confirm account deletion:');
+            if (confirmation === 'DELETE') {
+                if (confirm('This action cannot be undone. Are you absolutely sure?')) {
+                    // Clear all user data
+                    localStorage.removeItem('bigb_user');
+                    localStorage.removeItem('bigb_cart');
+                    localStorage.removeItem('bigb_wishlist');
+                    
+                    showToast('Account deleted successfully');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.php';
+                    }, 2000);
+                }
+            }
+        }
+
+        // Logout function
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear user session but keep cart
+                localStorage.removeItem('bigb_user');
+                
+                showToast('Logged out successfully');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.php';
+                }, 1500);
+            }
+        }
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return `UGX ${amount.toLocaleString()}`;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-UG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handle browser back button
+        window.addEventListener('popstate', function(e) {
+            // Handle navigation if needed
+        });
+
+        // Check authentication on page load
+        window.addEventListener('load', function() {
+            const savedUser = localStorage.getItem('bigb_user');
+            if (!savedUser) {
+                showToast('Please login to access your account', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.php';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

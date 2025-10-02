@@ -195,7 +195,7 @@ $categoriesPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">📂</span>
         <span class="nav-text">Categories</span>
       </a>
-      <a href="admin_inventory.php" class="nav-item">
+      <a href="inventory.php" class="nav-item">
         <span class="nav-icon">📋</span>
         <span class="nav-text">Inventory</span>
       </a>
@@ -221,7 +221,7 @@ $categoriesPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">🏠</span>
         <span class="nav-text">View Store</span>
       </a>
-      <a href="#" class="nav-item" onclick="adminLogout()">
+      <a href="index.php" class="nav-item" onclick="adminLogout()">
         <span class="nav-icon">🚪</span>
         <span class="nav-text">Logout</span>
       </a>

@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.adminLogout = function () {
     if (confirm('Are you sure you want to logout?')) {
       // Redirect to login or homepage
-      window.location.href = 'index.html';
+      window.location.href = 'index.php';
     }
   };
 });

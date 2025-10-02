@@ -14,13 +14,13 @@ require_once 'connect.php';
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">BigB</a>
+            <a href="index.php" class="logo">BigB</a>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="index.php#categories">Categories</a></li>
                 <li><a href="products.php">Products</a></li>
                 <li><a href="index.php#support">Support</a></li>
-                <li><a href="#" class="account-link">My Account</a></li>
+                <li><a href="account.html" class="account-link">My Account</a></li>
             </ul>
         </nav>
     </header>
@@ -174,7 +174,7 @@ require_once 'connect.php';
                 </div>
                 <div class="form-group">
                     <label for="cardName">Cardholder Name</label>
-                    <input type="text" id="cardName" class="form-input" placeholder="John Doe" required>
+                    <input type="text" id="cardName" class="form-input" placeholder="Niwe Isaac" required>
                 </div>
                 <button class="process-payment" onclick="processCardPayment()">
                     Pay with Card

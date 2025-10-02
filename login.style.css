@@ -22,23 +22,26 @@
     font-family: Gotham-Book; 
   
   }
-  .hero{
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  
-  }
-  .form-box{
-    width: 380px;
-    height: 480px;
-    position: relative;
-    margin: 6% auto;
-    background: rgba(255, 255, 255, 0.76);
-    padding: 5px;
-    border-radius: 5px;
-    overflow: hidden;
-  
-  }
+
+.hero {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.form-box {
+  width: 380px;
+  height: 480px;
+  position: relative;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.76);
+  padding: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
   .button-box{
     width: 220px;
     margin: 35px auto;

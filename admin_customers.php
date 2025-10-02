@@ -7,7 +7,7 @@ if (!isset($_SESSION['customers'])) {
     $_SESSION['customers'] = [
         [
             'id' => 1,
-            'name' => 'John Doe',
+            'name' => 'Niwe Isaac',
             'email' => 'john@example.com',
             'phone' => '+256700123456',
             'joined' => '2024-05-20',
@@ -16,8 +16,8 @@ if (!isset($_SESSION['customers'])) {
         ],
         [
             'id' => 2,
-            'name' => 'Jane Smith',
-            'email' => 'jane@example.com',
+            'name' => 'Hzyf Sgy',
+            'email' => 'Hzyf@example.com',
             'phone' => '+256701234567',
             'joined' => '2024-05-22',
             'orders_count' => 3,
@@ -25,8 +25,8 @@ if (!isset($_SESSION['customers'])) {
         ],
         [
             'id' => 3,
-            'name' => 'Alice Johnson',
-            'email' => 'alice@example.com',
+            'name' => 'Collins Tum',
+            'email' => 'Tum@example.com',
             'phone' => '+256702345678',
             'joined' => '2024-05-25',
             'orders_count' => 7,
@@ -163,15 +163,15 @@ $customersPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">🛒</span>
         <span class="nav-text">Orders</span>
       </a>
-      <a href="admin_customers.php" class="nav-item active" aria-current="page">
+      <a href="admin_customers.php" class="nav-item">
         <span class="nav-icon">👥</span>
         <span class="nav-text">Customers</span>
       </a>
-      <a href="admin_categories.php" class="nav-item">
+      <a href="admin_categories.php" class="nav-item active" aria-current="page">
         <span class="nav-icon">📂</span>
         <span class="nav-text">Categories</span>
       </a>
-      <a href="admin_inventory.php" class="nav-item">
+      <a href="inventory.php" class="nav-item">
         <span class="nav-icon">📋</span>
         <span class="nav-text">Inventory</span>
       </a>
@@ -197,7 +197,7 @@ $customersPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">🏠</span>
         <span class="nav-text">View Store</span>
       </a>
-      <a href="#" class="nav-item" onclick="adminLogout()">
+      <a href="index.php" class="nav-item" onclick="adminLogout()">
         <span class="nav-icon">🚪</span>
         <span class="nav-text">Logout</span>
       </a>

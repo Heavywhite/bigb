@@ -118,7 +118,7 @@ require_once 'connect.php';
                 <div class="product-info">
                     <h3 class="product-title">Samsung Galaxy A54</h3>
                     <div class="product-price">UGX 1,200,000</div>
-                    <button class="add-to-cart-btn" ><a href="log_index.html">Purchase item</a></button>
+                    <button class="add-to-cart-btn" ><a href="log_index.php">Purchase item</a></button>
                 </div>
             </div>
             <div class="product-card" data-category="fashion">
@@ -126,7 +126,7 @@ require_once 'connect.php';
                 <div class="product-info">
                     <h3 class="product-title">Cotton T-Shirt</h3>
                     <div class="product-price">UGX 25,000</div>
-                    <button class="add-to-cart-btn"><a href="log_index.html">Purchase item</a></button>
+                    <button class="add-to-cart-btn"><a href="log_index.php">Purchase item</a></button>
                 </div>
             </div>
             <div class="product-card" data-category="home">
@@ -134,7 +134,7 @@ require_once 'connect.php';
                 <div class="product-info">
                     <h3 class="product-title">Kitchen Blender</h3>
                     <div class="product-price">UGX 180,000</div>
-                    <button class="add-to-cart-btn" ><a href="log_index.html">Purchase item</a></button>
+                    <button class="add-to-cart-btn" ><a href="log_index.php">Purchase item</a></button>
                 </div>
             </div>
             <div class="product-card" data-category="beauty">
@@ -142,7 +142,7 @@ require_once 'connect.php';
                 <div class="product-info">
                     <h3 class="product-title">Skincare Set</h3>
                     <div class="product-price">UGX 75,000</div>
-                    <button class="add-to-cart-btn"><a href="log_index.html">Purchase item</a></button>
+                    <button class="add-to-cart-btn"><a href="log_index.php">Purchase item</a></button>
                 </div>
             </div>
             <div class="product-card" data-category="sports">
@@ -150,7 +150,7 @@ require_once 'connect.php';
                 <div class="product-info">
                     <h3 class="product-title">Football Jersey</h3>
                     <div class="product-price">UGX 45,000</div>
-                    <button class="add-to-cart-btn"><a href="log_index.html">Purchase item</a></button>
+                    <button class="add-to-cart-btn"><a href="log_index.php">Purchase item</a></button>
                 </div>
             </div>
             <div class="product-card" data-category="electronics">
@@ -158,7 +158,7 @@ require_once 'connect.php';
                 <div class="product-info">
                     <h3 class="product-title">Wireless Earbuds</h3>
                     <div class="product-price">UGX 150,000</div>
-                    <button class="add-to-cart-btn"><a href="log_index.html">Purchase item</a></button>
+                    <button class="add-to-cart-btn"><a href="log_index.php">Purchase item</a></button>
                 </div>
             </div>
         </div>
@@ -239,8 +239,9 @@ require_once 'connect.php';
                 <ul>
                     <li><a href="faq-page.html">FAQ</a></li>
                     <li><a href="shipping-page.html">Shipping Info</a></li>
-                    <li><a href="returns-page.html">Returns</a></li>
+                    <li><a href="returns.html">Returns</a></li>
                     <li><a href="track-order-page.html">Track Order</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
                 </ul>
             </div>
             <div class="footer-section">

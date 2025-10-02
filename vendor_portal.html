@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Portal - BigB Uganda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --accent-orange: #FF8800;
+            --orange-hover: #E67500;
+            --neutral-white: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --input-bg: #F8F8F8;
+            --border-color: #CCCCCC;
+            --success-green: #4CAF50;
+            --error-red: #f44336;
+            --warning-yellow: #ff9800;
+            --info-blue: #2196F3;
+        }
+
+        /* Header */
+        .vendor-header {
+            background: var(--primary-black);
+            color: var(--neutral-white);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .vendor-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: var(--accent-orange);
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .vendor-badge {
+            background: var(--accent-orange);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-header {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--accent-orange);
+            background: transparent;
+            color: var(--neutral-white);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            background: var(--accent-orange);
+        }
+
+        /* Main Container */
+        .vendor-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Auth Container (Login/Register) */
+        .auth-container {
+            max-width: 500px;
+            margin: 4rem auto;
+            background: var(--neutral-white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: var(--text-light);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .auth-tab.active {
+            border-bottom-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--input-bg);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            display: none;
+        }
+
+        .dashboard-container.active {
+            display: block;
+        }
+
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 2rem;
+        }
+
+        /* Dashboard Sidebar */
+        .dashboard-sidebar {
+            background: var(--neutral-white);
+            border-radius: 15px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .vendor-profile {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+
+        .vendor-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--orange-hover));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+
+        .vendor-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .vendor-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--success-green);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255, 136, 0, 0.1);
+            color: var(--accent-orange);
+        }
+
+        .sidebar-menu a.active {
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .menu-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            background: var(--neutral-white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            min-height: 80vh;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 5px solid var(--accent-orange);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Products Table */
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-add {
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background: var(--orange-hover);
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .products-table th {
+            background: #f5f5f5;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+
+        .products-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .products-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .product-image {
+            font-size: 2rem;
+        }
+
+        .product-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: var(--info-blue);
+            color: white;
+        }
+
+        .btn-delete {
+            background: var(--error-red);
+            color: white;
+        }
+
+        /* Orders List */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--accent-orange);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Analytics Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .chart-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        /* Settings */
+        .settings-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .settings-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-orange);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success-green);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--error-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .vendor-container {
+                padding: 1rem;
+            }
+
+            .auth-container {
+                margin: 2rem 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-sidebar {
+                position: static;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-table {
+                font-size: 0.85rem;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="vendor-header">
+        <nav class="vendor-nav">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="index.php" class="logo">BigB</a>
+                <span class="vendor-badge">VENDOR PORTAL</span>
+            </div>
+            <div class="header-actions" id="headerActions">
+                <!-- Will be populated based on login status -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="vendor-container">
+        <!-- Auth Container (Login/Register) -->
+        <div class="auth-container" id="authContainer">
+            <div class="auth-header">
+                <h1 class="auth-title">Vendor Portal</h1>
+                <p class="auth-subtitle">Join BigB marketplace and grow your business</p>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="vendorLoginForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="vendor@business.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login to Dashboard</button>
+                <div class="form-footer">
+                    <a href="#" style="color: var(--accent-orange); text-decoration: none;">Forgot Password?</a>
+                </div>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form" id="vendorRegisterForm">
+                <div class="form-group">
+                    <label class="form-label">Business Name</label>
+                    <input type="text" class="form-input" placeholder="Your Business Name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" placeholder="Doe" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="business@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-input" placeholder="+256 XXX XXX XXX" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Business Category</label>
+                    <select class="form-input" required>
+                        <option value="">Select Category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="fashion">Fashion & Apparel</option>
+                        <option value="home">Home & Living</option>
+                        <option value="beauty">Beauty & Health</option>
+                        <option value="sports">Sports & Fitness</option>
+                        <option value="books">Books & Media</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Business Address</label>
+                    <input type="text" class="form-input" placeholder="Kampala, Uganda" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="Create a strong password" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-input" placeholder="Confirm your password" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Vendor Account</button>
+                <div class="form-footer">
+                    By registering, you agree to our <a href="#" style="color: var(--accent-orange);">Terms & Conditions</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Dashboard Container -->
+        <div class="dashboard-container" id="dashboardContainer">
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="vendor-profile">
+                        <div class="vendor-avatar" id="vendorAvatar">🏪</div>
+                        <div class="vendor-name" id="vendorName">My Store</div>
+                        <span class="vendor-status">VERIFIED</span>
+                    </div>
+
+                    <nav>
+                        <ul class="sidebar-menu">
+                            <li>
+                                <a href="#" class="active" data-section="overview">
+                                    <span class="menu-icon">📊</span>
+                                    Overview
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-section="products">
+                                    <span class="menu-icon">📦</span>
+                                    Products
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-section="orders">
+                                    <span class="menu-icon">🛒</span>
+                                    Orders
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-section="analytics">
+                                    <span class="menu-icon">📈</span>
+                                    Analytics
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-section="customers">
+                                    <span class="menu-icon">👥</span>
+                                    Customers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-section="payments">
+                                    <span class="menu-icon">💰</span>
+                                    Payments
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-section="settings">
+                                    <span class="menu-icon">⚙️</span>
+                                    Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Main Dashboard Content -->
+                <main class="dashboard-content">
+                    <!-- Overview Section -->
+                    <section id="overview" class="content-section active">
+                        <div class="section-header">
+                            <h1 class="section-title">Dashboard Overview</h1>
+                            <p class="section-subtitle">Welcome back! Here's your business performance</p>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">💰</div>
+                                <div class="stat-value">UGX 2.4M</div>
+                                <div class="stat-label">Total Revenue</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🛒</div>
+                                <div class="stat-value">156</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">📦</div>
+                                <div class="stat-value">45</div>
+                                <div class="stat-label">Active Products</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">👥</div>
+                                <div class="stat-value">89</div>
+                                <div class="stat-label">Customers</div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin: 2rem 0 1rem 0;">Recent Orders</h3>
+                        <div class="orders-list" id="recentOrdersList">
+                            <!-- Recent orders will be loaded here -->
+                        </div>
+                    </section>
+
+                    <!-- Products Section -->
+                    <section id="products" class="content-section">
+                        <div class="section-header">
+                            <div class="products-header">
+                                <div>
+                                    <h1 class="section-title">My Products</h1>
+                                    <p class="section-subtitle">Manage your product catalog</p>
+                                </div>
+                                <button class="btn-add" onclick="openAddProductModal()">➕ Add Product</button>
+                            </div>
+                        </div>
+
+                        <table class="products-table" id="productsTable">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Orders Section -->
+                    <section id="orders" class="content-section">
+                        <div class="section-header">
+                            <h1 class="section-title">Orders Management</h1>
+                            <p class="section-subtitle">Track and manage customer orders</p>
+                        </div>
+
+                        <div class="orders-list" id="allOrdersList">
+                            <!-- All orders will be loaded here -->
+                        </div>
+                    </section>
+
+                    <!-- Analytics Section -->
+                    <section id="analytics" class="content-section">
+                        <div class="section-header">
+                            <h1 class="section-title">Sales Analytics</h1>
+                            <p class="section-subtitle">Insights into your business performance</p>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">📈</div>
+                                <div class="stat-value">+15%</div>
+                                <div class="stat-label">Sales Growth</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⭐</div>
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🔄</div>
+                                <div class="stat-value">3.2</div>
+                                <div class="stat-label">Avg Order Value</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-value">85%</div>
+                                <div class="stat-label">Conversion Rate</div>
+                            </div>
+                        </div>
+
+                        <div class="charts-grid">
+                            <div class="chart-card">
+                                <h3 class="chart-title">Sales Trend (Last 30 Days)</h3>
+                                <div class="chart-placeholder">Chart visualization would appear here</div>
+                            </div>
+                            <div class="chart-card">
+                                <h3 class="chart-title">Top Selling Products</h3>
+                                <div class="chart-placeholder">Product performance chart</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Customers Section -->
+                    <section id="customers" class="content-section">
+                        <div class="section-header">
+                            <h1 class="section-title">Customer Management</h1>
+                            <p class="section-subtitle">View and manage your customers</p>
+                        </div>
+
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Email</th>
+                                    <th>Total Orders</th>
+                                    <th>Total Spent</th>
+                                    <th>Last Order</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody">
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>john@email.com</td>
+                                    <td>5</td>
+                                    <td>UGX 450,000</td>
+                                    <td>2 days ago</td>
+                                    <td>
+                                        <div class="action-btns">
+                                            <button class="btn-sm btn-edit">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>jane@email.com</td>
+                                    <td>3</td>
+                                    <td>UGX 280,000</td>
+                                    <td>1 week ago</td>
+                                    <td>
+                                        <div class="action-btns">
+                                            <button class="btn-sm btn-edit">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Payments Section -->
+                    <section id="payments" class="content-section">
+                        <div class="section-header">
+                            <h1 class="section-title">Payment History</h1>
+                            <p class="section-subtitle">Track your earnings and payouts</p>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">💵</div>
+                                <div class="stat-value">UGX 2.1M</div>
+                                <div class="stat-label">Available Balance</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🏦</div>
+                                <div class="stat-value">UGX 5.8M</div>
+                                <div class="stat-label">Total Paid Out</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⏳</div>
+                                <div class="stat-value">UGX 300K</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin: 2rem 0 1rem 0;">Recent Transactions</h3>
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Payment Method</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TXN123456</td>
+                                    <td>Jan 25, 2025</td>
+                                    <td>UGX 450,000</td>
+                                    <td><span class="product-status status-active">Completed</span></td>
+                                    <td>MTN MoMo</td>
+                                </tr>
+                                <tr>
+                                    <td>TXN123457</td>
+                                    <td>Jan 20, 2025</td>
+                                    <td>UGX 280,000</td>
+                                    <td><span class="product-status status-active">Completed</span></td>
+                                    <td>Bank Transfer</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Settings Section -->
+                    <section id="settings" class="content-section">
+                        <div class="section-header">
+                            <h1 class="section-title">Store Settings</h1>
+                            <p class="section-subtitle">Configure your store preferences</p>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Business Information</h3>
+                            <form id="businessInfoForm">
+                                <div class="form-group">
+                                    <label class="form-label">Business Name</label>
+                                    <input type="text" class="form-input" value="My Store" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Contact Email</label>
+                                        <input type="email" class="form-input" value="store@email.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Contact Phone</label>
+                                        <input type="tel" class="form-input" value="+256 700 123 456" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Business Address</label>
+                                    <textarea class="form-input" rows="3" required>Kampala, Uganda</textarea>
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Notifications</h3>
+                            
+                            <div class="toggle-switch">
+                                <span>Email Notifications for New Orders</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="toggle-switch">
+                                <span>SMS Notifications</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="toggle-switch">
+                                <span>Low Stock Alerts</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Payment Settings</h3>
+                            <div class="form-group">
+                                <label class="form-label">Payout Method</label>
+                                <select class="form-input">
+                                    <option>MTN Mobile Money</option>
+                                    <option>Airtel Money</option>
+                                    <option>Bank Transfer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Account Number</label>
+                                <input type="text" class="form-input" placeholder="Enter account number">
+                            </div>
+                            <button class="btn-primary">Update Payment Info</button>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Security</h3>
+                            <button class="btn-primary">Change Password</button>
+                            <button class="btn-primary" style="background: var(--info-blue); margin-left: 1rem;">Enable 2FA</button>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Product</h2>
+                <button class="modal-close" onclick="closeAddProductModal()">&times;</button>
+            </div>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-input" placeholder="Enter product name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-input" required>
+                        <option value="">Select Category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="home">Home & Living</option>
+                        <option value="beauty">Beauty</option>
+                        <option value="sports">Sports</option>
+                        <option value="books">Books</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Price (UGX)</label>
+                        <input type="number" class="form-input" placeholder="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Stock Quantity</label>
+                        <input type="number" class="form-input" placeholder="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" rows="4" placeholder="Product description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Product Image</label>
+                    <input type="file" class="form-input" accept="image/*">
+                </div>
+                <button type="submit" class="btn-primary">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <script>
+        // Global state
+        let isVendorLoggedIn = false;
+        let currentVendor = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkVendorSession();
+            initializeAuthForms();
+        });
+
+        // Check vendor session
+        function checkVendorSession() {
+            const savedVendor = localStorage.getItem('bigb_vendor');
+            if (savedVendor) {
+                try {
+                    currentVendor = JSON.parse(savedVendor);
+                    isVendorLoggedIn = true;
+                    showDashboard();
+                } catch (e) {
+                    console.error('Error loading vendor session:', e);
+                }
+            } else {
+                showAuthContainer();
+            }
+        }
+
+        // Show auth container
+        function showAuthContainer() {
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('dashboardContainer').classList.remove('active');
+            updateHeaderActions(false);
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('dashboardContainer').classList.add('active');
+            updateHeaderActions(true);
+            loadVendorInfo();
+            loadDashboardData();
+        }
+
+        // Update header actions
+        function updateHeaderActions(isLoggedIn) {
+            const headerActions = document.getElementById('headerActions');
+            if (isLoggedIn) {
+                headerActions.innerHTML = `
+                    <button class="btn-header" onclick="vendorLogout()">Logout</button>
+                    <a href="index.php" class="btn-header">Customer Site</a>
+                `;
+            } else {
+                headerActions.innerHTML = `
+                    <a href="index.php" class="btn-header">Customer Site</a>
+                `;
+            }
+        }
+
+        // Switch auth tabs
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            if (tab === 'login') {
+                document.getElementById('vendorLoginForm').classList.add('active');
+            } else {
+                document.getElementById('vendorRegisterForm').classList.add('active');
+            }
+        }
+
+        // Initialize auth forms
+        function initializeAuthForms() {
+            // Login form
+            document.getElementById('vendorLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = this.querySelector('input[type="email"]').value;
+                const password = this.querySelector('input[type="password"]').value;
+                
+                // Simulate login
+                setTimeout(() => {
+                    const vendorData = {
+                        id: Date.now(),
+                        businessName: 'My Store',
+                        email: email,
+                        name: 'Store Owner',
+                        category: 'electronics',
+                        status: 'verified',
+                        loginDate: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem('bigb_vendor', JSON.stringify(vendorData));
+                    currentVendor = vendorData;
+                    isVendorLoggedIn = true;
+                    
+                    showToast('Login successful! Welcome to your dashboard.');
+                    showDashboard();
+                }, 1000);
+            });
+
+            // Register form
+            document.getElementById('vendorRegisterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const businessName = this.querySelector('input[type="text"]').value;
+                const email = this.querySelector('input[type="email"]').value;
+                const password = this.querySelectorAll('input[type="password"]')[0].value;
+                const confirmPassword = this.querySelectorAll('input[type="password"]')[1].value;
+                
+                if (password !== confirmPassword) {
+                    showToast('Passwords do not match!', 'error');
+                    return;
+                }
+                
+                // Simulate registration
+                setTimeout(() => {
+                    const vendorData = {
+                        id: Date.now(),
+                        businessName: businessName,
+                        email: email,
+                        name: 'Store Owner',
+                        category: 'electronics',
+                        status: 'pending',
+                        loginDate: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem('bigb_vendor', JSON.stringify(vendorData));
+                    currentVendor = vendorData;
+                    isVendorLoggedIn = true;
+                    
+                    showToast('Registration successful! Welcome to BigB Marketplace.');
+                    showDashboard();
+                }, 1500);
+            });
+        }
+
+        // Load vendor info
+        function loadVendorInfo() {
+            if (currentVendor) {
+                document.getElementById('vendorName').textContent = currentVendor.businessName || 'My Store';
+                const initials = currentVendor.businessName ? currentVendor.businessName.substring(0, 2).toUpperCase() : '🏪';
+                if (initials.match(/[A-Z]{2}/)) {
+                    document.getElementById('vendorAvatar').textContent = initials;
+                }
+            }
+        }
+
+        // Load dashboard data
+        function loadDashboardData() {
+            loadRecentOrders();
+            loadProducts();
+            loadAllOrders();
+            initializeSidebarNavigation();
+        }
+
+        // Initialize sidebar navigation
+        function initializeSidebarNavigation() {
+            const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+            
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
+
+        // Load recent orders
+        function loadRecentOrders() {
+            const orders = getVendorOrders().slice(0, 3);
+            const container = document.getElementById('recentOrdersList');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">No orders yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = orders.map(order => createOrderCard(order)).join('');
+        }
+
+        // Load all orders
+        function loadAllOrders() {
+            const orders = getVendorOrders();
+            const container = document.getElementById('allOrdersList');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">No orders yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = orders.map(order => createOrderCard(order)).join('');
+        }
+
+        // Get vendor orders
+        function getVendorOrders() {
+            return [
+                {
+                    id: 'ORD123456',
+                    customer: 'John Doe',
+                    date: '2025-01-25',
+                    total: 450000,
+                    status: 'pending',
+                    items: 2
+                },
+                {
+                    id: 'ORD123457',
+                    customer: 'Jane Smith',
+                    date: '2025-01-24',
+                    total: 280000,
+                    status: 'completed',
+                    items: 1
+                },
+                {
+                    id: 'ORD123458',
+                    customer: 'Mike Johnson',
+                    date: '2025-01-23',
+                    total: 150000,
+                    status: 'completed',
+                    items: 3
+                }
+            ];
+        }
+
+        // Create order card
+        function createOrderCard(order) {
+            const statusClass = order.status === 'completed' ? 'status-completed' : 'status-pending';
+            
+            return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order #${order.id}</div>
+                            <div style="color: #666; font-size: 0.9rem;">Customer: ${order.customer}</div>
+                        </div>
+                        <span class="order-status ${statusClass}">${order.status.toUpperCase()}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="margin-bottom: 0.5rem;"><strong>${order.items}</strong> items</div>
+                            <div style="color: #666; font-size: 0.9rem;">${formatDate(order.date)}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 1.3rem; font-weight: bold; color: var(--accent-orange);">
+                                ${formatCurrency(order.total)}
+                            </div>
+                            <button class="btn-sm btn-edit" onclick="viewOrderDetails('${order.id}')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load products
+        function loadProducts() {
+            const products = getVendorProducts();
+            const tbody = document.getElementById('productsTableBody');
+            
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #666;">No products yet. Add your first product!</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span class="product-image">${product.image}</span>
+                            <span>${product.name}</span>
+                        </div>
+                    </td>
+                    <td>${product.category}</td>
+                    <td>${formatCurrency(product.price)}</td>
+                    <td>${product.stock}</td>
+                    <td>
+                        <span class="product-status ${product.active ? 'status-active' : 'status-inactive'}">
+                            ${product.active ? 'Active' : 'Inactive'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-sm btn-edit" onclick="editProduct(${product.id})">Edit</button>
+                            <button class="btn-sm btn-delete" onclick="deleteProduct(${product.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Get vendor products
+        function getVendorProducts() {
+            const savedProducts = localStorage.getItem('bigb_vendor_products');
+            if (savedProducts) {
+                return JSON.parse(savedProducts);
+            }
+            
+            return [
+                { id: 1, name: 'Samsung Galaxy A54', category: 'Electronics', price: 1200000, stock: 15, active: true, image: '📱' },
+                { id: 2, name: 'Cotton T-Shirt', category: 'Fashion', price: 25000, stock: 50, active: true, image: '👕' },
+                { id: 3, name: 'Kitchen Blender', category: 'Home', price: 180000, stock: 8, active: true, image: '🏠' }
+            ];
+        }
+
+        // Modal functions
+        function openAddProductModal() {
+            document.getElementById('addProductModal').classList.add('active');
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').classList.remove('active');
+            document.getElementById('addProductForm').reset();
+        }
+
+        // Add product form
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            showToast('Product added successfully!');
+            closeAddProductModal();
+            loadProducts();
+        });
+
+        // Product actions
+        function editProduct(productId) {
+            showToast('Edit product functionality');
+        }
+
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                showToast('Product deleted successfully');
+                loadProducts();
+            }
+        }
+
+        // Order actions
+        function viewOrderDetails(orderId) {
+            showToast(`Viewing details for order ${orderId}`);
+        }
+
+        // Vendor logout
+        function vendorLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('bigb_vendor');
+                isVendorLoggedIn = false;
+                currentVendor = null;
+                showToast('Logged out successfully');
+                setTimeout(() => {
+                    showAuthContainer();
+                }, 1000);
+            }
+        }
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return `UGX ${amount.toLocaleString()}`;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-UG', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Business info form
+        document.getElementById('businessInfoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('Business information updated successfully!');
+        });
+    </script>
+</body>
+</html>

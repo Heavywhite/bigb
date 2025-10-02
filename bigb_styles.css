@@ -1886,7 +1886,9 @@ section {
     gap: var(--space-lg);
   }
   
-  /* Footer Mobile */
   .footer-content {
+    display: grid;
     grid-template-columns: 1fr;
-    gap: var(
+    gap: var(--space-md);
+  }
+}

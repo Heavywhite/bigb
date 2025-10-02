@@ -21,11 +21,11 @@ require_once 'connect.php';
             </div>
 
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="#categories">Categories</a></li>
                 <!-- <li><a href="#products">Products</a></li> -->
                 <li><a href="#support">Support</a></li>
-                <li><a href="index.html" class="login-trigger">Logout</a></li>
+                <li><a href="index.php" class="login-trigger">Logout</a></li>
             <li><a href="cart.php">Cart</a></li>
             </ul>
 
@@ -477,8 +477,8 @@ require_once 'connect.php';
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="Index.html">Home</a></li>
-                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="index.php#categories">Categories</a></li>
                     <!-- <li><a href="#products">Products</a></li>-->
                     <li><a href="#support">Support</a></li>
                 </ul>
@@ -486,18 +486,19 @@ require_once 'connect.php';
             <div class="footer-section">
                 <h3>Customer Care</h3>
                 <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Shipping Info</a></li>
-                    <li><a href="#">Returns</a></li>
-                    <li><a href="#">Track Order</a></li>
+                    <li><a href="faq-page.html">FAQ</a></li>
+                    <li><a href="shipping-page.html">Shipping Info</a></li>
+                    <li><a href="returns.html">Returns</a></li>
+                    <li><a href="track-order-page.html">Track Order</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Legal</h3>
                 <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Seller Agreement</a></li>
+                    <li><a href="services and privacy policy.html">Privacy Policy</a></li>
+                    <li><a href="services and privacy policy.html">Terms of Service</a></li>
+                    <li><a href="services and privacy policy.html">Seller Agreement</a></li>
                 </ul>
             </div>
         </div>

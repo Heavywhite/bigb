@@ -1,79 +1,84 @@
 <?php
 session_start(); // Start session for user authentication
+include 'connect.php';
 
-// Database configuration
-$host = 'localhost';
-$dbname = 'bigb_ecommerce';
-$username = 'root'; 
-$password = '';     
-
-
-if (!isset($_SESSION['logged_in'])) {
-      header("Location: login.php");
-      exit();
-}
-
-// Error reporting
+// Error reporting (for development; disable in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$error = '';
-// Function to sanitize input
+
+// Function to sanitize input (for email/phone)
 function sanitize($data) {
-    return htmlspecialchars(strip_tags(trim($data)));
+    return trim(strip_tags($data));
 }
 
 // Handle POST request from form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = sanitize($_POST['input'] ?? ''); // Email or Phone
     $pass = $_POST['password'] ?? '';
-    
- // Validation
+
+    // Validation
     if (empty($input) || empty($pass)) {
-        $error = "Email/Phone and password are required.";
-    } elseif (!filter_var($input, FILTER_VALIDATE_EMAIL) && !preg_match('/^\+?[1-9]\d{1,14}$/', $input)) {
-        $error = "Invalid email or phone format.";
+        $_SESSION['error'] = "Email/Phone and password are required.";
+        header("Location: log_index.php");
+        exit();
+    } elseif (
+        !filter_var($input, FILTER_VALIDATE_EMAIL) &&
+        !preg_match('/^\+?[1-9]\d{1,14}$/', $input)
+    ) {
+        $_SESSION['error'] = "Invalid email or phone format.";
+        header("Location: log_index.php");
+        exit();
     } else {
         // Connect to database
-        $conn = new mysqli($host, $username, $password, $dbname);
+        $conn = new mysqli($servername, $username, $password, $database);
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            $_SESSION['error'] = "Connection failed: " . $conn->connect_error;
+            header("Location: log_index.php");
+            exit();
         }
+
         // Prepare query to find user by email OR phone
         $stmt = $conn->prepare("SELECT id, email, phone, password, name FROM users WHERE email = ? OR phone = ?");
         $stmt->bind_param("ss", $input, $input);
         $stmt->execute();
         $result = $stmt->get_result();
+
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
-// Verify password
+
+            // Verify password
             if (password_verify($pass, $user['password'])) {
-                // Login successful
+                // Regenerate session ID to prevent session fixation
+                session_regenerate_id(true);
+
+                // Set session variables
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['name'] = $user['name'];
-                $_SESSION['logged_in'] = true;
+
                 // Redirect to dashboard or home page
-                header("Location: products.php"); //file for post-login page
+                header("Location: products.php");
+                $stmt->close();
+                $conn->close();
                 exit();
             } else {
-                $error = "Invalid password.";
+                $_SESSION['error'] = "Invalid password.";
+                $stmt->close();
+                $conn->close();
+                header("Location: log_index.php");
+                exit();
             }
         } else {
-            $error = "No account found with that email or phone.";
+            $_SESSION['error'] = "No account found with that email or phone. Please register if you don't have an account.";
+            $stmt->close();
+            $conn->close();
+            header("Location: log_index.php");
+            exit();
         }
-        $stmt->close();
-        $conn->close();
     }
+} else {
+    // If not POST, redirect to index
+    header("Location: log_index.php");
+    exit();
 }
-$cart_count = 0;
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $cart_count = $row['total'] ?? 0;
-    $stmt->close();
-}
-$conn->close();
+?>

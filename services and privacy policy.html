@@ -10,13 +10,13 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">BigB</a>
+            <a href="index.php" class="logo">BigB</a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html">Categories</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="index.html">Support</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="index.php#catergories">Categories</a></li>
+                <li><a href="index.php#products">Products</a></li>
+                
+                <li><a href="index.php#support">Support</a></li>
             </ul>
         </nav>
     </header>
@@ -444,19 +444,19 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#support">Support</a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="index.php#categories">Categories</a></li>
+                    <li><a href="index.php#products">Products</a></li>
+                    <li><a href="index.php#support">Support</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Customer Care</h3>
                 <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Shipping Info</a></li>
-                    <li><a href="#">Returns</a></li>
-                    <li><a href="#">Track Order</a></li>
+                    <li><a href="faq-page.html">FAQ</a></li>
+                    <li><a href="shipping-page.html">Shipping Info</a></li>
+                    <li><a href="returns.html">Returns</a></li>
+                    <li><a href="track-order-page.html">Track Order</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -472,6 +472,26 @@
             <p>&copy; 2024 BigB Uganda. All rights reserved. | Made with ❤️ for Uganda</p>
         </div>
     </footer>
+    <script>
+function switchPolicyTab(policy) {
+    // Remove 'active' class from all tabs
+    document.getElementById('terms-tab').classList.remove('active');
+    document.getElementById('privacy-tab').classList.remove('active');
+    
+    // Remove 'active' class from all policy contents
+    document.getElementById('terms').classList.remove('active');
+    document.getElementById('privacy').classList.remove('active');
+    
+    // Add 'active' class to the selected tab and content
+    if (policy === 'terms') {
+        document.getElementById('terms-tab').classList.add('active');
+        document.getElementById('terms').classList.add('active');
+    } else if (policy === 'privacy') {
+        document.getElementById('privacy-tab').classList.add('active');
+        document.getElementById('privacy').classList.add('active');
+    }
+}
+</script>
 
             </body>
             </html>

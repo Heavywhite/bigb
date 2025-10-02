@@ -242,11 +242,11 @@ $promoPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">👥</span>
         <span class="nav-text">Customers</span>
       </a>
-      <a href="admin_categories.php" class="nav-item">
+      <a href="admin_categories.php" class="nav-item active" aria-current="page">
         <span class="nav-icon">📂</span>
         <span class="nav-text">Categories</span>
       </a>
-      <a href="admin_inventory.php" class="nav-item">
+      <a href="inventory.php" class="nav-item">
         <span class="nav-icon">📋</span>
         <span class="nav-text">Inventory</span>
       </a>
@@ -254,7 +254,7 @@ $promoPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">📈</span>
         <span class="nav-text">Analytics</span>
       </a>
-      <a href="admin_promo.php" class="nav-item active" aria-current="page">
+      <a href="admin_promo.php" class="nav-item">
         <span class="nav-icon">🎟️</span>
         <span class="nav-text">Promo Codes</span>
       </a>
@@ -272,7 +272,7 @@ $promoPage = array_slice($filtered, $offset, $perPage);
         <span class="nav-icon">🏠</span>
         <span class="nav-text">View Store</span>
       </a>
-      <a href="#" class="nav-item" onclick="adminLogout()">
+      <a href="index.php" class="nav-item" onclick="adminLogout()">
         <span class="nav-icon">🚪</span>
         <span class="nav-text">Logout</span>
       </a>

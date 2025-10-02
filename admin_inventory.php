@@ -8,7 +8,7 @@ if (!isset($_SESSION['customers'])) {
     $_SESSION['customers'] = [
         [
             'id' => 1,
-            'name' => 'John Doe',
+            'name' => 'Niwe Isaac',
             'email' => 'john@example.com',
             'phone' => '+256700123456',
             'joined' => '2024-05-20',
@@ -17,8 +17,8 @@ if (!isset($_SESSION['customers'])) {
         ],
         [
             'id' => 2,
-            'name' => 'Jane Smith',
-            'email' => 'jane@example.com',
+            'name' => 'Hzyf Sgy',
+            'email' => 'Hzyf@example.com',
             'phone' => '+256701234567',
             'joined' => '2024-05-22',
             'orders_count' => 3,
@@ -26,8 +26,8 @@ if (!isset($_SESSION['customers'])) {
         ],
         [
             'id' => 3,
-            'name' => 'Alice Johnson',
-            'email' => 'alice@example.com',
+            'name' => 'Collins Tum',
+            'email' => 'Tum@example.com',
             'phone' => '+256702345678',
             'joined' => '2024-05-25',
             'orders_count' => 7,
